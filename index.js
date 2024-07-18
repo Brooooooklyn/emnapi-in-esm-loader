@@ -361,4 +361,4 @@ if (!nativeBinding) {
   throw new Error(`Failed to load native binding`)
 }
 
-module.exports.plus100 = nativeBinding.plus100
+module.exports.resolve = nativeBinding.resolve

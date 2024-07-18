@@ -33,7 +33,7 @@ const {
     const worker = new Worker(new URL('./wasi-worker-browser.mjs', import.meta.url), {
       type: 'module',
     })
-
+    
     return worker
   },
   overwriteImports(importObject) {
@@ -51,6 +51,8 @@ const {
 })
 
 function __napi_rs_initialize_modules(__napiInstance) {
-  __napiInstance.exports['__napi_register__plus_100_0']?.()
+  __napiInstance.exports['__napi_register__ResolveContext_struct_0']?.()
+  __napiInstance.exports['__napi_register__ResolveFnOutput_struct_1']?.()
+  __napiInstance.exports['__napi_register__resolve_2']?.()
 }
-export const plus100 = __napiModule.exports.plus100
+export const resolve = __napiModule.exports.resolve

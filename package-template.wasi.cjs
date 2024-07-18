@@ -21,7 +21,7 @@ const __wasi = new __nodeWASI({
   env: process.env,
   preopens: {
     [__rootDir]: __rootDir,
-  },
+  }
 })
 
 const __emnapiContext = __emnapiGetDefaultContext()
@@ -41,19 +41,13 @@ if (__nodeFs.existsSync(__wasmDebugFilePath)) {
   try {
     __wasmFilePath = __nodePath.resolve('@napi-rs/package-template-pnpm-wasm32-wasi')
   } catch {
-    throw new Error(
-      'Cannot find package-template.wasm32-wasi.wasm file, and @napi-rs/package-template-pnpm-wasm32-wasi package is not installed.',
-    )
+    throw new Error('Cannot find package-template.wasm32-wasi.wasm file, and @napi-rs/package-template-pnpm-wasm32-wasi package is not installed.')
   }
 }
 
-const {
-  instance: __napiInstance,
-  module: __wasiModule,
-  napiModule: __napiModule,
-} = __emnapiInstantiateNapiModuleSync(__nodeFs.readFileSync(__wasmFilePath), {
+const { instance: __napiInstance, module: __wasiModule, napiModule: __napiModule } = __emnapiInstantiateNapiModuleSync(__nodeFs.readFileSync(__wasmFilePath), {
   context: __emnapiContext,
-  asyncWorkPoolSize: (function () {
+  asyncWorkPoolSize: (function() {
     const threadsSizeFromEnv = Number(process.env.NAPI_RS_ASYNC_WORK_POOL_SIZE ?? process.env.UV_THREADPOOL_SIZE)
     // NaN > 0 is false
     if (threadsSizeFromEnv > 0) {
@@ -84,10 +78,12 @@ const {
   },
   beforeInit({ instance }) {
     __napi_rs_initialize_modules(instance)
-  },
+  }
 })
 
 function __napi_rs_initialize_modules(__napiInstance) {
-  __napiInstance.exports['__napi_register__plus_100_0']?.()
+  __napiInstance.exports['__napi_register__ResolveContext_struct_0']?.()
+  __napiInstance.exports['__napi_register__ResolveFnOutput_struct_1']?.()
+  __napiInstance.exports['__napi_register__resolve_2']?.()
 }
-module.exports.plus100 = __napiModule.exports.plus100
+module.exports.resolve = __napiModule.exports.resolve
